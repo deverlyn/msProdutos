@@ -6,7 +6,6 @@ public record ProdutoDTO(
         Long id,
         String nome,
         String descricao,
-        int quantidade,
-        BigDecimal preco
+        int quantidade
 ) {
 }

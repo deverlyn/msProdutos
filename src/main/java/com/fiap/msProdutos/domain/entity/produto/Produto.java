@@ -8,7 +8,6 @@ public class Produto {
     private String nome;
     private String descricao;
     private int quantidade;
-    private BigDecimal preco;
 
     public Produto(Long id, int quantidade) {
         this.id = id;
@@ -16,23 +15,19 @@ public class Produto {
     }
 
     public Produto() {
-
-
     }
 
-    public Produto(String nome, String descricao, int quantidade, BigDecimal preco) {
+    public Produto(String nome, String descricao, int quantidade) {
         this.nome = nome;
         this.descricao = descricao;
         this.quantidade = quantidade;
-        this.preco = preco;
     }
 
-    public Produto(Long id, String nome, String descricao, int quantidade, BigDecimal preco) {
+    public Produto(Long id, String nome, String descricao, int quantidade) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.quantidade = quantidade;
-        this.preco = preco;
     }
 
     public Long getId() {
@@ -67,11 +62,4 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public BigDecimal getPreco() {
-        return preco;
-    }
-
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
-    }
 }

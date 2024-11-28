@@ -44,10 +44,9 @@ public class ProdutoController {
                 dto.id(),
                 dto.nome(),
                 dto.descricao(),
-                dto.quantidade(),
-                dto.preco()
+                dto.quantidade()
         ));
-        return new ProdutoDTO(salvo.getId(), salvo.getNome(), salvo.getDescricao(), salvo.getQuantidade(), salvo.getPreco());
+        return new ProdutoDTO(salvo.getId(), salvo.getNome(), salvo.getDescricao(), salvo.getQuantidade());
     }
 
     @GetMapping
@@ -58,8 +57,7 @@ public class ProdutoController {
                         v.getId(),
                         v.getNome(),
                         v.getDescricao(),
-                        v.getQuantidade(),
-                        v.getPreco()
+                        v.getQuantidade()
                 )));
         return produtos;
     }
@@ -84,8 +82,7 @@ public class ProdutoController {
                         v.getId(),
                         v.getNome(),
                         v.getDescricao(),
-                        v.getQuantidade(),
-                        v.getPreco()
+                        v.getQuantidade()
                 )));
         return produtos;
     }
@@ -96,8 +93,8 @@ public class ProdutoController {
         return new ProdutoDTO(produto.getId(),
                 produto.getNome(),
                 produto.getDescricao(),
-                produto.getQuantidade(),
-                produto.getPreco());
+                produto.getQuantidade()
+        );
     }
 
     @DeleteMapping

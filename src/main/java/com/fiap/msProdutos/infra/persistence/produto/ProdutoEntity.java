@@ -30,9 +30,6 @@ public class ProdutoEntity {
     @Column(name = "quantidade")
     private int quantidade;
 
-    @Column(name = "preco")
-    private BigDecimal preco;
-
     public int getQuantidade() {
         return quantidade;
     }

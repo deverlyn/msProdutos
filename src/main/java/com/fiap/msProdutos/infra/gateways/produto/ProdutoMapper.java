@@ -10,8 +10,7 @@ public class ProdutoMapper {
                 input.getId(),
                 input.getNome(),
                 input.getDescricao(),
-                input.getQuantidade(),
-                input.getPreco()
+                input.getQuantidade()
         );
     }
 
@@ -20,8 +19,7 @@ public class ProdutoMapper {
                 input.getId(),
                 input.getNome(),
                 input.getDescricao(),
-                input.getQuantidade(),
-                input.getPreco()
+                input.getQuantidade()
         );
     }
 }

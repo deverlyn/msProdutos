@@ -41,8 +41,7 @@ public class RepositorioDeProdutoJpa implements
         ProdutoEntity entity = new ProdutoEntity(produto.getId(),
                 produto.getNome(),
                 produto.getDescricao(),
-                produto.getQuantidade(),
-                produto.getPreco());
+                produto.getQuantidade());
 
         return mapper.toDomain(repository.save(entity));
     }
