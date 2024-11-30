@@ -49,6 +49,20 @@ public class RepositorioDeProdutoJpaTest {
         verify(repository).save(entity);
     }
 
+    @Test
+    void testCadastraProdutoInterface() {
+        Produto produto = new Produto(1L, "Produto 1", "Descrição 1", 10);
+        ProdutoEntity entity = new ProdutoEntity(1L, "Produto 1", "Descrição 1", 10);
+
+        when(mapper.toDomain(any(ProdutoEntity.class))).thenReturn(produto);
+        when(repository.save(any(ProdutoEntity.class))).thenReturn(entity);
+
+        Produto result = repositorioDeProdutoJpa.cadastraProdutoInterface(produto);
+
+        assertNotNull(result);
+        assertEquals(produto, result);
+        verify(repository).save(any(ProdutoEntity.class));
+    }
 
     @Test
     void testChecarUmaListaDeProdutos() {
@@ -81,18 +95,76 @@ public class RepositorioDeProdutoJpaTest {
     }
 
     @Test
-    void testCadastraProdutoInterface() {
-        Produto produto = new Produto(1L, "Produto 1", "Descrição 1", 10);
-        ProdutoEntity entity = new ProdutoEntity(1L, "Produto 1", "Descrição 1", 10);
+    void testConsultarProdutosDisponiveisInterface() {
+        ProdutoEntity entity1 = new ProdutoEntity(1L, "Produto 1", "Descrição 1", 10);
+        ProdutoEntity entity2 = new ProdutoEntity(2L, "Produto 2", "Descrição 2", 0);
+        List<ProdutoEntity> entities = List.of(entity1, entity2);
+        Produto produto1 = new Produto(1L, "Produto 1", "Descrição 1", 10);
 
-        when(mapper.toDomain(any(ProdutoEntity.class))).thenReturn(produto);
-        when(repository.save(any(ProdutoEntity.class))).thenReturn(entity);
+        when(repository.findAll()).thenReturn(entities);
+        when(mapper.toDomain(entity1)).thenReturn(produto1);
+        when(mapper.toDomain(entity2)).thenReturn(null);
 
-        Produto result = repositorioDeProdutoJpa.cadastraProdutoInterface(produto);
+        List<Produto> result = repositorioDeProdutoJpa.consultarProdutosDisponiveisInterface();
+
+        assertEquals(1, result.size());
+        assertEquals(produto1, result.get(0));
+    }
+
+    @Test
+    void testConsultarTodosOsProdutosInterface() {
+        ProdutoEntity entity1 = new ProdutoEntity(1L, "Produto 1", "Descrição 1", 10);
+        ProdutoEntity entity2 = new ProdutoEntity(2L, "Produto 2", "Descrição 2", 5);
+        List<ProdutoEntity> entities = List.of(entity1, entity2);
+        Produto produto1 = new Produto(1L, "Produto 1", "Descrição 1", 10);
+        Produto produto2 = new Produto(2L, "Produto 2", "Descrição 2", 5);
+
+        when(repository.findAll()).thenReturn(entities);
+        when(mapper.toDomain(entity1)).thenReturn(produto1);
+        when(mapper.toDomain(entity2)).thenReturn(produto2);
+
+        List<Produto> result = repositorioDeProdutoJpa.consultarTodosOsProdutosInterface();
+
+        assertEquals(2, result.size());
+        assertEquals(produto1, result.get(0));
+        assertEquals(produto2, result.get(1));
+    }
+
+    @Test
+    void testConsultarUmProduto() {
+        Long id = 1L;
+        ProdutoEntity entity = new ProdutoEntity(id, "Produto 1", "Descrição 1", 10);
+        Produto produto = new Produto(id, "Produto 1", "Descrição 1", 10);
+
+        when(repository.findById(id)).thenReturn(Optional.of(entity));
+        when(mapper.toDomain(entity)).thenReturn(produto);
+
+        Produto result = repositorioDeProdutoJpa.consultarUmProduto(id);
 
         assertNotNull(result);
         assertEquals(produto, result);
-        verify(repository).save(any(ProdutoEntity.class));
     }
 
+    @Test
+    void testExcluirProdutoInterface() {
+        Long id = 1L;
+
+        repositorioDeProdutoJpa.excluirProdutoInterface(id);
+
+        verify(repository).deleteById(id);
+    }
+
+    @Test
+    void testVenderProdutoInterface() {
+        Long id = 1L;
+        int quantidade = 5;
+        ProdutoEntity entity = new ProdutoEntity(id, "Produto 1", "Descrição 1", 10);
+
+        when(repository.findById(id)).thenReturn(Optional.of(entity));
+
+        repositorioDeProdutoJpa.venderProdutoInterface(id, quantidade);
+
+        assertEquals(5, entity.getQuantidade());
+        verify(repository).save(entity);
+    }
 }

@@ -7,6 +7,7 @@ import com.fiap.msProdutos.infra.persistence.produto.ProdutoRepository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RepositorioDeProdutoJpa implements
@@ -86,6 +87,7 @@ public class RepositorioDeProdutoJpa implements
         return repository.findAll()
                 .stream()
                 .map(mapper::toDomain)
+                .filter(Objects::nonNull) // Filter out null values
                 .filter(produto -> produto.getQuantidade() > 0)
                 .toList();
     }
