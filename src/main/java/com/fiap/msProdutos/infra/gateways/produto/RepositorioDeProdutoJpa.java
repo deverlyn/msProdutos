@@ -38,12 +38,20 @@ public class RepositorioDeProdutoJpa implements
 
     @Override
     public Produto cadastraProdutoInterface(Produto produto) {
+        if (produto == null) {
+            throw new IllegalArgumentException("Produto não pode ser nulo");
+        }
         ProdutoEntity entity = new ProdutoEntity(produto.getId(),
                 produto.getNome(),
                 produto.getDescricao(),
                 produto.getQuantidade());
 
-        return mapper.toDomain(repository.save(entity));
+        ProdutoEntity savedEntity = repository.save(entity);
+        Produto result = mapper.toDomain(savedEntity);
+        if (result == null) {
+            throw new IllegalStateException("Mapped Produto não pode ser nulo");
+        }
+        return result;
     }
 
     @Override
