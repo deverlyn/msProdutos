@@ -1,5 +1,6 @@
 package com.fiap.msProdutos.config;
 
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -8,6 +9,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
+    public static final String FILA_PEDIDOS = "pedidosQueue";
+
+    @Bean
+    public Queue pedidosQueue() {
+        return new Queue(FILA_PEDIDOS, true);
+    }
 
     @Bean
     public Jackson2JsonMessageConverter jsonMessageConverter() {
