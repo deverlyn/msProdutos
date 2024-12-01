@@ -1,4 +1,4 @@
-package com.fiap.msProdutos.infra.controller.produto;
+package com.fiap.msProdutos.controller.produto;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

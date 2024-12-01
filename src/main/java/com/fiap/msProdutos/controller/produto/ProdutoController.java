@@ -1,4 +1,4 @@
-package com.fiap.msProdutos.infra.controller.produto;
+package com.fiap.msProdutos.controller.produto;
 
 import com.fiap.msProdutos.application.usecases.produto.*;
 import com.fiap.msProdutos.domain.entity.produto.Produto;

@@ -7,6 +7,7 @@ import com.fiap.msProdutos.infra.persistence.produto.ProdutoRepository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RepositorioDeProdutoJpa implements
@@ -38,12 +39,20 @@ public class RepositorioDeProdutoJpa implements
 
     @Override
     public Produto cadastraProdutoInterface(Produto produto) {
+        if (produto == null) {
+            throw new IllegalArgumentException("Produto não pode ser nulo");
+        }
         ProdutoEntity entity = new ProdutoEntity(produto.getId(),
                 produto.getNome(),
                 produto.getDescricao(),
                 produto.getQuantidade());
 
-        return mapper.toDomain(repository.save(entity));
+        ProdutoEntity savedEntity = repository.save(entity);
+        Produto result = mapper.toDomain(savedEntity);
+        if (result == null) {
+            throw new IllegalStateException("Mapped Produto não pode ser nulo");
+        }
+        return result;
     }
 
     @Override
@@ -78,6 +87,7 @@ public class RepositorioDeProdutoJpa implements
         return repository.findAll()
                 .stream()
                 .map(mapper::toDomain)
+                .filter(Objects::nonNull) // Filter out null values
                 .filter(produto -> produto.getQuantidade() > 0)
                 .toList();
     }
