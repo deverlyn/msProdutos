@@ -17,17 +17,9 @@ public class ProdutoRabbitConsumer {
     private VenderProduto venderProduto;
 
     @RabbitListener(queues = "pedidosQueue")
-    public void processarMensagem(String mensagemJson) {
+    public void processarMensagem(ProdutoPedidoMessage produtoPedido) {
         try {
-            // Parse o JSON recebido
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(mensagemJson);
-
-            // Extraia os campos do JSON
-            Long id = jsonNode.get("id").asLong();
-            int quantidade = jsonNode.get("quantidade").asInt();
-
-            venderProduto.venderProduto(id, quantidade);
+            venderProduto.venderProduto(produtoPedido.getId(), produtoPedido.getQuantidade());
         } catch (Exception e) {
             System.err.println("Erro ao processar mensagem: " + e.getMessage());
         }
