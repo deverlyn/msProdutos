@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Produto")
@@ -28,6 +29,7 @@ public class ProdutoEntity {
 
     @Column(name = "quantidade")
     private int quantidade;
+
 
     public int getQuantidade() {
         return quantidade;

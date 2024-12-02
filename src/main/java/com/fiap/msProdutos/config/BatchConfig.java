@@ -52,12 +52,13 @@ public class BatchConfig {
     public ItemReader<ProdutoEntity> reader() {
         BeanWrapperFieldSetMapper<ProdutoEntity> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
         fieldSetMapper.setTargetType(ProdutoEntity.class);
+        fieldSetMapper.setDistanceLimit(0);
         return new FlatFileItemReaderBuilder<ProdutoEntity>()
                 .name("produtoItemReader")
                 .resource(new ClassPathResource("produtos.csv"))
                 .delimited()
                 .delimiter(",")
-                .names("id","nome", "preco", "quantidade")
+                .names("id", "nome", "descricao", "quantidade")
                 .fieldSetMapper(fieldSetMapper)
                 .build();
     }
@@ -67,7 +68,7 @@ public class BatchConfig {
         return new JdbcBatchItemWriterBuilder<ProdutoEntity>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .dataSource(dataSource)
-                .sql("INSERT INTO produto (id, nome, preco, quantidade) VALUES (:id, :nome, :preco, :quantidade)")
+                .sql("INSERT INTO produto (id, nome, descricao, quantidade) VALUES (:id, :nome, :descricao, :quantidade)")
                 .beanMapped()
                 .build();
     }
